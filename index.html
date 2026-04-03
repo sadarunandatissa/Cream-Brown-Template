@@ -1,1 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roshan & Dinesha Wedding Invitation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
 
+    <style>
+      :root {
+        --accent: #b8926a; /* Muted Bronze/Gold */
+        --dark: #1a1a1a;
+        --bg: #fcfbf7;
+        --white: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--bg);
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      /* --- COVER PAGE --- */
+      #cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+          url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80")
+            no-repeat center center/cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition:
+          transform 1.2s cubic-bezier(0.7, 0, 0.3, 1),
+          opacity 1s;
+      }
+
+      #cover.opened {
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .cover-content {
+        text-align: center;
+        color: white;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(8px);
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .cover-title {
+        font-family: "Great Vibes", cursive;
+        font-size: clamp(3rem, 10vw, 5.5rem);
+        margin-bottom: 10px;
+      }
+
+      .open-btn {
+        margin-top: 30px;
+        padding: 15px 40px;
+        background: white;
+        color: var(--dark);
+        border: none;
+        font-weight: 600;
+        letter-spacing: 3px;
+        cursor: pointer;
+        transition: 0.4s;
+        text-transform: uppercase;
+      }
+
+      .open-btn:hover {
+        background: var(--accent);
+        color: white;
+        letter-spacing: 5px;
+      }
+
+      /* --- MAIN CONTENT --- */
+      .content {
+        opacity: 0;
+        transition: opacity 1s ease 0.5s;
+      }
+
+      .content.visible {
+        opacity: 1;
+      }
+
+      section {
+        padding: 80px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      h2 {
+        font-family: "Great Vibes", cursive;
+        font-size: 3.5rem;
+        color: var(--accent);
+        margin-bottom: 30px;
+      }
+
+      /* --- STORY SECTION --- */
+      .story-box {
+        background: var(--white);
+        padding: 40px;
+        box-shadow: 15px 15px 0px #eee;
+        line-height: 1.8;
+        font-size: 1.1rem;
+        border: 1px solid #f0f0f0;
+      }
+
+      /* --- INVITATION CARD --- */
+      .invitation-card {
+        background: var(--white);
+        padding: 60px 20px;
+        border: 1px solid #e0e0e0;
+        position: relative;
+        box-shadow: 0 10px 50px rgba(0, 0, 0, 0.03);
+      }
+
+      .invitation-card::before {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border: 1px solid var(--accent);
+        pointer-events: none;
+      }
+
+      .names {
+        font-family: "Great Vibes", cursive;
+        font-size: clamp(3rem, 8vw, 4.5rem);
+        margin: 20px 0;
+        color: var(--accent);
+      }
+
+      /* --- COUNTDOWN --- */
+      .countdown-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+      }
+
+      .countdown-box {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: 1px solid #ddd;
+        background: #fff;
+      }
+
+      .countdown-box span {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .countdown-box small {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #888;
+      }
+
+      /* --- MAP --- */
+      .map-responsive {
+        overflow: hidden;
+        padding-bottom: 56.25%;
+        position: relative;
+        height: 0;
+        border-radius: 4px;
+      }
+
+      .map-responsive iframe {
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        border: 0;
+      }
+
+      /* --- FORMS --- */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      form {
+        background: var(--white);
+        padding: 35px;
+        text-align: left;
+        border-top: 5px solid var(--accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      form h3 {
+        margin-bottom: 20px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        color: var(--accent);
+        text-transform: uppercase;
+      }
+
+      label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #555;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+        background: #fdfdfd;
+        font-family: inherit;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--dark);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+      }
+
+      .submit-btn:hover {
+        background: var(--accent);
+      }
+
+      /* --- CONTROLS --- */
+      #music-control {
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        width: 45px;
+        height: 45px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        z-index: 2000;
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="bg-music" loop>
+      <source
+        src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Beautiful-Ambient-Piano.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <div id="music-control" onclick="toggleMusic()">🎵</div>
+
+    <div id="cover">
+      <div class="cover-content">
+        <p style="letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 10px">
+          SAVE THE DATE
+        </p>
+        <h1 class="cover-title">Roshan & Dinesha</h1>
+        <p style="letter-spacing: 3px; font-weight: 300">APRIL 30, 2026</p>
+        <button class="open-btn" onclick="openInvitation()">
+          View Invitation
+        </button>
+      </div>
+    </div>
+
+    <div class="content" id="main-content">
+      <section>
+        <h2>Our Story</h2>
+        <div class="story-box">
+          From a chance meeting at a mutual friend's party to countless
+          adventures together, our journey has been filled with love, laughter,
+          and unforgettable memories. We can't wait to start this new chapter of
+          our lives together and share our special day with all of you!
+        </div>
+      </section>
+
+      <section id="invitation">
+        <div class="invitation-card">
+          <p style="letter-spacing: 4px; font-size: 0.75rem; color: #999">
+            TOGETHER WITH THEIR FAMILIES
+          </p>
+          <h2 class="names">Roshan & Dinesha</h2>
+          <p style="margin-bottom: 20px">
+            INVITE YOU TO CELEBRATE THEIR WEDDING
+          </p>
+
+          <div style="margin: 35px 0">
+            <p style="font-size: 1.2rem; font-weight: 300; letter-spacing: 2px">
+              THURSDAY
+            </p>
+            <p
+              style="
+                font-size: 2.8rem;
+                font-weight: 600;
+                color: var(--accent);
+                margin: 5px 0;
+              "
+            >
+              30 . 04 . 26
+            </p>
+            <p style="font-size: 1.1rem; letter-spacing: 1px">
+              AT 10:30 IN THE MORNING
+            </p>
+          </div>
+
+          <p><strong>GREEN GARDEN HOTEL</strong><br />KURUNEGALA, SRI LANKA</p>
+
+          <div class="countdown-container" id="countdown">
+            <div class="countdown-box">
+              <span id="days">00</span><small>Days</small>
+            </div>
+            <div class="countdown-box">
+              <span id="hours">00</span><small>Hrs</small>
+            </div>
+            <div class="countdown-box">
+              <span id="mins">00</span><small>Min</small>
+            </div>
+            <div class="countdown-box">
+              <span id="secs">00</span><small>Sec</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="map">
+        <h2>The Venue</h2>
+        <div class="map-responsive">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.912662057754!2d80.37025817578332!3d7.474864911306355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae339001355150f%3A0xc3f6c8f498c09a89!2sGreen%20Garden%20Hotel!5e0!3m2!1sen!2slk!4v1711200000000!5m2!1sen!2slk"
+            width="100%"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
+
+      <section id="rsvp-section">
+        <h2>RSVP & Wishes</h2>
+        <div class="form-grid">
+          <form id="rsvp-form">
+            <h3>RSVP</h3>
+            <input type="hidden" name="formType" value="rsvp" />
+            <label>Your Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              required
+            />
+            <label>Attending?</label>
+            <select name="attending" required>
+              <option value="" disabled selected>Please select...</option>
+              <option value="Yes">Yes, I'll be there!</option>
+              <option value="No">Sorry, I can't make it.</option>
+            </select>
+            <label>Number of Guests</label>
+            <input type="number" name="guests" value="1" min="1" />
+            <button type="submit" class="submit-btn">Send RSVP</button>
+          </form>
+
+          <form id="wishes-form">
+            <h3>Best Wishes</h3>
+            <input type="hidden" name="formType" value="wishes" />
+            <label>Your Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              required
+            />
+            <label>Message</label>
+            <textarea
+              name="message"
+              placeholder="Write your message here..."
+              rows="5"
+              required
+            ></textarea>
+            <button type="submit" class="submit-btn">Send Wishes</button>
+          </form>
+        </div>
+      </section>
+
+      <footer
+        style="
+          padding: 60px;
+          color: #bbb;
+          font-size: 0.7rem;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+        "
+      >
+        Made with Love for Roshan & Dinesha
+      </footer>
+    </div>
+
+    <script>
+      // 1. OPENING LOGIC
+      function openInvitation() {
+        const music = document.getElementById("bg-music");
+        music.play().catch(() => console.log("Audio play blocked by browser"));
+
+        document.getElementById("cover").classList.add("opened");
+        document.getElementById("main-content").classList.add("visible");
+        document.body.style.overflow = "auto";
+      }
+      document.body.style.overflow = "hidden";
+
+      function toggleMusic() {
+        const music = document.getElementById("bg-music");
+        const btn = document.getElementById("music-control");
+        if (music.paused) {
+          music.play();
+          btn.innerText = "🎵";
+        } else {
+          music.pause();
+          btn.innerText = "🔇";
+        }
+      }
+
+      // 2. COUNTDOWN TIMER
+      const weddingDate = new Date("April 30, 2026 10:30:00").getTime();
+      const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
+
+        if (diff < 0) {
+          clearInterval(timer);
+          document.getElementById("countdown").innerHTML =
+            "<h3>It's Wedding Day!</h3>";
+          return;
+        }
+
+        document.getElementById("days").innerText = Math.floor(
+          diff / (1000 * 60 * 60 * 24),
+        )
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("hours").innerText = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        )
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("mins").innerText = Math.floor(
+          (diff % (1000 * 60 * 60)) / (1000 * 60),
+        )
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("secs").innerText = Math.floor(
+          (diff % (1000 * 60)) / 1000,
+        )
+          .toString()
+          .padStart(2, "0");
+      }, 1000);
+
+      // 3. FORM SUBMISSION (Your existing Google Sheet Logic)
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbyIn7vJ8tXrtstuqpvd5Vpl-rbZKvsn36zEm1m6CbMG-qFawFs_gG7lRnw0Cj1sHavn/exec";
+
+      function handleForm(formId) {
+        const form = document.getElementById(formId);
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const btn = form.querySelector("button");
+          btn.disabled = true;
+          btn.innerText = "Sending...";
+
+          fetch(scriptURL, { method: "POST", body: new FormData(form) })
+            .then(() => {
+              alert("Thank you! Your response has been saved.");
+              form.reset();
+            })
+            .catch(() => alert("Error submitting. Please try again."))
+            .finally(() => {
+              btn.disabled = false;
+              btn.innerText =
+                formId === "rsvp-form" ? "Send RSVP" : "Send Wishes";
+            });
+        });
+      }
+
+      handleForm("rsvp-form");
+      handleForm("wishes-form");
+    </script>
+  </body>
+</html>
